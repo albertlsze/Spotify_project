@@ -1,6 +1,7 @@
 # Login file
 MySQL_Desktop_Login.txt
 SQL_connector.py
+config/database_config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -18,7 +19,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
