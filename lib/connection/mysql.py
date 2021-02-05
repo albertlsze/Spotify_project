@@ -11,4 +11,4 @@ class MYSQLConnection:
         - config: dictionary of mysql configurations
         '''
 
-        self.cnx = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
+        self.engine = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
