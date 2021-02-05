@@ -1,7 +1,7 @@
 # Login file
 MySQL_Desktop_Login.txt
 SQL_connector.py
-config/database_config.py
+config/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

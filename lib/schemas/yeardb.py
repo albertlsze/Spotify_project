@@ -1,14 +1,14 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, MetaData
+from sqlalchemy import Table, Column, Integer, Float, MetaData
 
 
-class GenreDB():
+class YearDB():
 
     def __init__(self):
-        self.name = 'genredb'
+        self.name = 'yeardb'
         self.meta = MetaData()
-        self.table = Table('genredb', self.meta,
-                           Column('genres',String(100),primary_key=True),
+        self.table = Table('yeardb', self.meta,
+                           Column('release_year', Integer,primary_key=True),
                            Column('acousticness_mean', Float),
                            Column('danceability_mean', Float),
                            Column('duration_ms_mean', Float),
@@ -29,4 +29,4 @@ class GenreDB():
         if not engine.dialect.has_table(engine, self.name):
             self.table.create(engine)
         else:
-            print(self.name,'database already exists')
+            print(self.name, 'database already exists')
