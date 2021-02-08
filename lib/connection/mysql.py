@@ -12,3 +12,7 @@ class MYSQLConnection:
         '''
 
         self.engine = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
+        self.connection = self.engine.connect()
+
+    def close(self):
+        self.connection.close()

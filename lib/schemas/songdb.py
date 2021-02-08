@@ -1,13 +1,14 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, Boolean, Date, MetaData
+from sqlalchemy import Table, Column, Integer, Float, String, Boolean, Date, ForeignKey, MetaData
+from sqlalchemy.orm import relationship
 
 
 class SongDB():
 
     def __init__(self):
-        self.name = 'sonddb'
+        self.name = 'songdb'
         self.meta = MetaData()
-        self.table = Table('songdb', self.meta,
+        self.table = Table(self.name, self.meta,
                            Column('song_id', String(100), primary_key=True),
                            Column('song_name', String(100)),
                            Column('artists_id', String(1000)),
@@ -23,10 +24,11 @@ class SongDB():
                            Column('tempo', Float),
                            Column('valence', Float),
                            Column('popularity', Integer),
-                           Column('music_key', Integer),
+                           Column('music_key', Integer, ForeignKey('musickey.music_key')),
                            Column('major_minor', Boolean),
                            Column('release_date', Date),
                            )
+        musickey = relationship('musickeydb', backref=self.name)
 
     def create_table(self,connection):
         engine = connection.engine

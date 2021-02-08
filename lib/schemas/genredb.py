@@ -1,13 +1,14 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, MetaData
+from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData
+from sqlalchemy.orm import relationship
 
 
-class GenreDB():
+class GenreDB(base):
 
     def __init__(self):
         self.name = 'genredb'
         self.meta = MetaData()
-        self.table = Table('genredb', self.meta,
+        self.table = Table(self.name, self.meta,
                            Column('genres',String(100),primary_key=True),
                            Column('acousticness_mean', Float),
                            Column('danceability_mean', Float),
@@ -20,9 +21,10 @@ class GenreDB():
                            Column('tempo_mean', Float),
                            Column('valence_mean', Float),
                            Column('popularity_mean', Float),
-                           Column('music_key_mode', Integer),
+                           Column('music_key_mode', Integer, ForeignKey('musickey.music_key')),
                            Column('major_minor_mode', Integer),
                            )
+        musickey = relationship('musickeydb', backref=self.name)
 
     def create_table(self,connection):
         engine = connection.engine

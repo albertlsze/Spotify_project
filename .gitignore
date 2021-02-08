@@ -1,7 +1,6 @@
 # Login file
 MySQL_Desktop_Login.txt
 SQL_connector.py
-config/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -14,6 +13,8 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+config/database_config.py
+spotify_project/
 develop-eggs/
 dist/
 downloads/

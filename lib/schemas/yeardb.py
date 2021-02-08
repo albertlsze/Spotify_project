@@ -1,5 +1,6 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, MetaData
+from sqlalchemy import Table, Column, Integer, Float, ForeignKey, MetaData
+from sqlalchemy.orm import relationship
 
 
 class YearDB():
@@ -7,7 +8,7 @@ class YearDB():
     def __init__(self):
         self.name = 'yeardb'
         self.meta = MetaData()
-        self.table = Table('yeardb', self.meta,
+        self.table = Table(self.name, self.meta,
                            Column('release_year', Integer,primary_key=True),
                            Column('acousticness_mean', Float),
                            Column('danceability_mean', Float),
@@ -20,9 +21,10 @@ class YearDB():
                            Column('tempo_mean', Float),
                            Column('valence_mean', Float),
                            Column('popularity_mean', Float),
-                           Column('music_key_mode', Integer),
+                           Column('music_key_mode', Integer, ForeignKey('musickey.music_key')),
                            Column('major_minor_mode', Integer),
                            )
+        musickey = relationship('musickeydb', backref=self.name)
 
     def create_table(self,connection):
         engine = connection.engine
