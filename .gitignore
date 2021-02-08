@@ -13,7 +13,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-config/database_config.py
+config/
 spotify_project/
 develop-eggs/
 dist/
