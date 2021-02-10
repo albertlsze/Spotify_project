@@ -3,7 +3,7 @@ from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaDa
 from sqlalchemy.orm import relationship
 
 
-class GenreDB(base):
+class GenreDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'genredb'

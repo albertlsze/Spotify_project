@@ -3,7 +3,7 @@ from sqlalchemy import Table, Column, Integer, Float, String, Boolean, Date, For
 from sqlalchemy.orm import relationship
 
 
-class SongDB():
+class SongDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'songdb'
