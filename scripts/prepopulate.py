@@ -9,6 +9,7 @@ import lib.utils.Data_pipeline.prepopulate_db as prepopulate
 import os
 
 SQL_cnx = MYSQLConnection(sql_config)
+SQL_cnx.close()
 sql_tables = {
     'musickey': MusicKeyDB(),
     'genre' : GenreDB(),
