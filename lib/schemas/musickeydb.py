@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import Table, Column, Integer, String, MetaData
 from sqlalchemy.orm import relationship
-
+from lib.models.declarative_base import DeclarativeBase
 
 class MusicKeyDB(DeclarativeBase):
     __tablename__ = "musickeydb"
@@ -15,10 +15,6 @@ class MusicKeyDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'musickeydb'
-        self.meta = MetaData()
-        self.table = Table(self.name, self.meta,
-
-                           )
 
     def create_table(self,connection):
         engine = connection.engine

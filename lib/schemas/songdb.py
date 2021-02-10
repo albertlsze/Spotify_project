@@ -1,34 +1,33 @@
 import sqlalchemy
 from sqlalchemy import Table, Column, Integer, Float, String, Boolean, Date, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
-
+from lib.models.declarative_base import DeclarativeBase
 
 class SongDB(DeclarativeBase):
+    __tablename__ = 'songdb'
+    song_id = Column(String(100), primary_key=True)
+    song_name = Column(String(100))
+    artists_id = Column(String(1000))
+    acousticness = Column(Float)
+    danceability = Column(Float)
+    duration_ms = Column(Integer)
+    energy = Column(Float)
+    explicit = Column(Boolean)
+    instrumentalness = Column(Float)
+    liveness = Column(Float)
+    loudness = Column(Float)
+    speechiness = Column(Float)
+    tempo = Column(Float)
+    valence = Column(Float)
+    popularity = Column(Integer)
+    music_key = Column(Integer, ForeignKey('musickey.music_key'))
+    major_minor = Column(Boolean)
+    release_date = Column(Date)
+    hit_song = Column(Integer)
 
     def __init__(self):
         self.name = 'songdb'
-        self.meta = MetaData()
-        self.table = Table(self.name, self.meta,
-                           Column('song_id', String(100), primary_key=True),
-                           Column('song_name', String(100)),
-                           Column('artists_id', String(1000)),
-                           Column('acousticness', Float),
-                           Column('danceability', Float),
-                           Column('duration_ms', Integer),
-                           Column('energy', Float),
-                           Column('explicit', Boolean),
-                           Column('instrumentalness', Float),
-                           Column('liveness', Float),
-                           Column('loudness', Float),
-                           Column('speechiness', Float),
-                           Column('tempo', Float),
-                           Column('valence', Float),
-                           Column('popularity', Integer),
-                           Column('music_key', Integer, ForeignKey('musickey.music_key')),
-                           Column('major_minor', Boolean),
-                           Column('release_date', Date),
-                           )
-        musickey = relationship('musickeydb', backref=self.name)
+        #self.meta = MetaData()
 
     def create_table(self,connection):
         engine = connection.engine

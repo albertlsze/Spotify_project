@@ -3,7 +3,6 @@ from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaDa
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 
-
 class ArtistDB(DeclarativeBase):
     __tablename__ = 'artistdb'
     artists_id = Column(String(100), primary_key=True)
@@ -26,14 +25,9 @@ class ArtistDB(DeclarativeBase):
     genre = Column(String(100))
     followers = Column(Integer, default=0)
 
-
     def __init__(self):
         self.name = 'test'
-        self.meta = MetaData()
-        musickey = relationship('musickeydb', backref=self.name)
-        self.table = Table(self.name, self.meta,
-                           )
-
+        #self.meta = MetaData()
 
     def create_table(self,connection):
         engine = connection.engine
