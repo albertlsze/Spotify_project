@@ -3,14 +3,21 @@ from sqlalchemy import Table, Column, Integer, String, MetaData
 from sqlalchemy.orm import relationship
 
 
-class MusicKeyDB():
+class MusicKeyDB(DeclarativeBase):
+    __tablename__ = "musickeydb"
+    music_key = Column(Integer, primary_key=True)
+    music_note = Column(String(5))
+
+    artist = relationship("ArtistDB")
+    genre = relationship("GenreDB")
+    year = relationship("YearDB")
+    song = relationship("SongDB")
 
     def __init__(self):
         self.name = 'musickeydb'
         self.meta = MetaData()
         self.table = Table(self.name, self.meta,
-                           Column('music_key', Integer,primary_key=True),
-                           Column('music_note', String(5)),
+
                            )
 
     def create_table(self,connection):

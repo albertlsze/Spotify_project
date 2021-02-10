@@ -3,7 +3,7 @@ from sqlalchemy import Table, Column, Integer, Float, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
 
 
-class YearDB():
+class YearDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'yeardb'

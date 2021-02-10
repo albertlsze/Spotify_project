@@ -1,34 +1,37 @@
 import sqlalchemy
 from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
+from lib.models.declarative_base import DeclarativeBase
 
 
-class ArtistDB():
+class ArtistDB(DeclarativeBase):
+    __tablename__ = 'artistdb'
+    artists_id = Column(String(100), primary_key=True)
+    artists = Column(String(100))
+    artist_popularity = Column(Integer)
+    acousticness_mean = Column(Float)
+    danceability_mean = Column(Float)
+    duration_ms_mean = Column(Float)
+    energy_mean = Column(Float)
+    instrumentalness_mean = Column(Float)
+    liveness_mean = Column(Float)
+    loudness_mean = Column(Float)
+    speechiness_mean = Column(Float)
+    tempo_mean = Column(Float)
+    valence_mean = Column(Float)
+    popularity_mean = Column(Float)
+    music_key_mode = Column(Integer, ForeignKey('musickey.music_key'))
+    major_minor_mode = Column(Integer)
+    num_tracks = Column(Integer)
+    genre = Column(String(100))
+    followers = Column(Integer, default=0)
+
 
     def __init__(self):
         self.name = 'test'
         self.meta = MetaData()
         musickey = relationship('musickeydb', backref=self.name)
         self.table = Table(self.name, self.meta,
-                           Column('artists_id', String(100), primary_key=True),
-                           Column('artists',String(100)),
-                           Column('artist_popularity', Integer),
-                           Column('acousticness_mean', Float),
-                           Column('danceability_mean', Float),
-                           Column('duration_ms_mean', Float),
-                           Column('energy_mean', Float),
-                           Column('instrumentalness_mean', Float),
-                           Column('liveness_mean', Float),
-                           Column('loudness_mean', Float),
-                           Column('speechiness_mean', Float),
-                           Column('tempo_mean', Float),
-                           Column('valence_mean', Float),
-                           Column('popularity_mean', Float),
-                           Column('music_key_mode', Integer, ForeignKey('musickey.music_key')),
-                           Column('major_minor_mode', Integer),
-                           Column('num_tracks', Integer),
-                           Column('genre', String(100)),
-                           Column('followers', Integer, default=0),
                            )
 
 
