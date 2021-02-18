@@ -1,10 +1,7 @@
 import pandas as pd
 from lib.connection.mysql import MYSQLConnection
-from lib.schemas.yeardb import YearDB
-from lib.schemas.genredb import GenreDB
-from lib.schemas.artistdb import ArtistDB
-from lib.schemas.songdb import SongDB
-from lib.schemas.musickeydb import MusicKeyDB
+from lib.models.yeardb import YearDB
+from lib.models.musickeydb import MusicKeyDB
 
 def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
     try:
@@ -19,7 +16,7 @@ def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
 def create_table(cnx:MYSQLConnection, db_obj) -> None:
     db_obj.create_table(cnx.connection)
 
-def  q -> None:
+def  prepopulate_musicdb(cnx:MYSQLConnection, table:MusicKeyDB) -> None:
     musickey_data = "../lib/utils/Data_pipeline/Prepopulated_data/music_key.csv"
     musickey_data = pd.read_csv(musickey_data)
 
