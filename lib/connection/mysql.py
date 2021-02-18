@@ -15,7 +15,7 @@ class MYSQLConnection:
 
         self.engine = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
         self.session_factory = sessionmaker(bind=self.engine)
-        self.session = scoped_session(bind=self.engine)
+        self.session = scoped_session(self.session_factory)
 
     @contextmanager
     def session_scope(self):
