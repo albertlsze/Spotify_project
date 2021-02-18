@@ -8,11 +8,6 @@ class MusicKeyDB(DeclarativeBase):
     music_key = Column(Integer, primary_key=True)
     music_note = Column(String(5))
 
-    artist = relationship("ArtistDB")
-    genre = relationship("GenreDB")
-    year = relationship("YearDB")
-    song = relationship("SongDB")
-
     def __init__(self):
         self.name = 'musickeydb'
 

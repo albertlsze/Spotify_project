@@ -20,10 +20,12 @@ class SongDB(DeclarativeBase):
     tempo = Column(Float)
     valence = Column(Float)
     popularity = Column(Integer)
-    music_key = Column(Integer, ForeignKey('musickey.music_key'))
+    music_key = Column(Integer, ForeignKey('musickeydb.music_key'))
     major_minor = Column(Boolean)
     release_date = Column(Date)
     hit_song = Column(Integer)
+
+    musickey = relationship("MusicKeyDB")
 
     def __init__(self):
         self.name = 'songdb'

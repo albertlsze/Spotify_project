@@ -1,11 +1,12 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData
+from sqlalchemy import Table, Column, Integer, Float, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 
-class GenreDB(DeclarativeBase):
+
+class YearDB(DeclarativeBase):
     __tablename__ = 'yeardb'
-    genres = Column(String(100), primary_key=True)
+    release_year = Column(Integer, primary_key=True)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
     duration_ms_mean = Column(Float)
@@ -17,11 +18,12 @@ class GenreDB(DeclarativeBase):
     tempo_mean = Column(Float)
     valence_mean = Column(Float)
     popularity_mean = Column(Float)
-    music_key_mode = Column(Integer, ForeignKey('musickey.music_key'))
+    music_key_mode = Column(Integer, ForeignKey('musickeydb.music_key'))
     major_minor_mode = Column(Integer)
+    musickey = relationship("MusicKeyDB")
 
     def __init__(self):
-        self.name = 'genredb'
+        self.name = 'yeardb'
         #self.meta = MetaData()
 
     def create_table(self,connection):
@@ -29,4 +31,4 @@ class GenreDB(DeclarativeBase):
         if not engine.dialect.has_table(engine, self.name):
             self.table.create(engine)
         else:
-            print(self.name,'database already exists')
+            print(self.name, 'database already exists')
