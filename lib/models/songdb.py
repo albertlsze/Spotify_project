@@ -1,7 +1,8 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, Boolean, Date, ForeignKey, MetaData
+from sqlalchemy import Column, Integer, Float, String, Boolean, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
+import pandas as pd
 
 class SongDB(DeclarativeBase):
     __tablename__ = 'songdb'
@@ -29,11 +30,6 @@ class SongDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'songdb'
-        #self.meta = MetaData()
 
-    def create_table(self,connection):
-        engine = connection.engine
-        if not engine.dialect.has_table(engine, self.name):
-            self.table.create(engine)
-        else:
-            print(self.name, 'database already exists')
+    def load_csv(self,filename):
+        self.data = pd.read_csv(filename)
