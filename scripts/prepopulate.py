@@ -20,8 +20,6 @@ sql_tables = {
 DeclarativeBase.metadata.drop_all(SQL_cnx.engine)
 DeclarativeBase.metadata.create_all(SQL_cnx.engine)
 
-#for key in sql_tables:
-#    prepopulate.create_table(SQL_cnx,sql_tables[key])
 '''
 print('\n')
 prepopulate.prepopulate_musicdb(SQL_cnx, sql_tables['musickey'])
