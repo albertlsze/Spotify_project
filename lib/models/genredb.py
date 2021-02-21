@@ -2,6 +2,7 @@ import sqlalchemy
 from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
+import pandas as pd
 
 class GenreDB(DeclarativeBase):
     __tablename__ = 'genredb'
@@ -23,11 +24,19 @@ class GenreDB(DeclarativeBase):
 
     def __init__(self):
         self.name = 'genredb'
-        #self.meta = MetaData()
 
-    def create_table(self,connection):
-        engine = connection.engine
-        if not engine.dialect.has_table(engine, self.name):
-            self.table.create(engine)
-        else:
-            print(self.name,'database already exists')
+    def load_csv(self, filename):
+        self.data = pd.read_csv(filename)
+
+        col_name = []
+        for i in self.data.columns:
+            if 'genres' in i:
+                continue
+            elif 'key' in i:
+                col_name.append('music_key_mode')
+            elif 'mode' in i:
+                col_name.append('major_minor_mode')
+            else:
+                col_name.append(i + '_mean')
+        self.data.columns = col_name
+        self.data.set_index('genres', inplace=True)
