@@ -6,7 +6,7 @@ import pandas as pd
 
 class YearDB(DeclarativeBase):
     __tablename__ = 'yeardb'
-    release_year = Column(Integer, primary_key=True)
+    release_year = Column(Integer, primary_key=True, autoincrement=False)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
     duration_ms_mean = Column(Float)

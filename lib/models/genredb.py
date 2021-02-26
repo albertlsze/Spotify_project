@@ -31,7 +31,7 @@ class GenreDB(DeclarativeBase):
         col_name = []
         for i in self.data.columns:
             if 'genres' in i:
-                continue
+                col_name.append(i)
             elif 'key' in i:
                 col_name.append('music_key_mode')
             elif 'mode' in i:
