@@ -1,5 +1,5 @@
 import pandas as pd
-from lib.connection.mysql import MYSQLConnection
+from lib.connection.mysqlcnx import MYSQLConnection
 from lib.models.yeardb import YearDB
 from lib.models.musickeydb import MusicKeyDB
 
@@ -13,12 +13,13 @@ def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
     else:
         print("Table %s created successfully." % db_obj.name);
 
-def  prepopulate_musicdb(cnx:MYSQLConnection, table:MusicKeyDB) -> None:
-    table.load_csv("../lib/utils/Data_pipeline/Prepopulated_data/music_key.csv")
+def  prepopulate_db(cnx:MYSQLConnection, table:dict) -> None:
+    table['musickey']['obj'].load_csv("./Prepopulated_data/music_key.csv")
+    table['genre']['obj'].load_csv("./Prepopulated_data/data_by_genres.csv")
+    table['year']['obj'].load_csv("./Prepopulated_data/data_by_year.csv")
+    table['artist']['obj'].load_csv("./Prepopulated_data/data_by_artist_preprocessed.csv")
+    table['song']['obj'].load_csv("./Prepopulated_data/song_data.csv")
 
-    add_pd_to_sql(table.data,cnx,table)
-
-def prepopulate_yeardb(cnx:MYSQLConnection, table:YearDB) -> None:
-    table.load_csv("../lib/utils/Data_pipeline/Prepopulated_data/data_by_year.csv")
-
-    add_pd_to_sql(year_data,cnx,table)
+    for key in table:
+        print('\n',key)
+        add_pd_to_sql(table[key]['obj'].data,cnx,table[key]['obj'])

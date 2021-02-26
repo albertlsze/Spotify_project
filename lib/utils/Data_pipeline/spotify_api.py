@@ -1,6 +1,13 @@
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-from config.database_config import spotify_api_config
+from lib.connection.spotifycnx import SpoyifyConnection
+
+def get_artist(cnx:SpoyifyConnection, name:str) -> dict:
+    results = cnx.scope.search(q='artist:' + name, type = 'artist')
+    items = results['artists']['items']
+    if len(items) > 0:
+        return items[0]
+    else:
+        return None
+
 
 
 birdy_uri = 'spotify:artist:2WX2uTcsvV5OnS0inACecP'
