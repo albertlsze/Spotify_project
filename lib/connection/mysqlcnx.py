@@ -13,7 +13,8 @@ class MYSQLConnection:
         - config: dictionary of mysql configurations
         '''
 
-        self.engine = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
+        #self.engine = create_engine('mysql+pymysql://'+config['username']+':'+config['password']+'@'+config['host']+'/'+config['database'])
+        self.engine = create_engine(f"mysql+pymysql://{config['username']}:{config['password']}@{config['host']}/{config['database']}")
         self.session_factory = sessionmaker(bind=self.engine)
         self.session = scoped_session(self.session_factory)
 
