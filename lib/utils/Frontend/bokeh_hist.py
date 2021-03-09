@@ -5,7 +5,6 @@ from bokeh.io import curdoc
 from bokeh.io import output_notebook, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool, Panel
 from bokeh.models.widgets import Tabs
-from pprint import pprint
 
 class bokeh_hist():
     def __init__(self,title):
@@ -67,7 +66,7 @@ class bokeh_hist():
             return plot
 
 if __name__ == "__main__":
-    song_data = 'D:\\Documents\\Github\\albertlsze\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
+    song_data = 'C:\\Users\\alber\\Documents\\Github\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
     song_data = pd.read_csv(song_data)
     column = ["acousticness","danceability","duration_ms","energy","instrumentalness","key","liveness","loudness","popularity","speechiness","tempo","valence"]
 
