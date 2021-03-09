@@ -1,4 +1,4 @@
-from config.database_config import configs
+from config.database_config import sql_config
 from lib.models.declarative_base import DeclarativeBase
 from lib.connection.mysqlcnx import MYSQLConnection
 from lib.schemas.musickeydb import MusicKeySchema
@@ -13,7 +13,7 @@ from lib.models.songdb import SongDB
 from lib.models.yeardb import YearDB
 import lib.utils.Data_pipeline.prepopulate_db as prepopulate
 
-SQL_cnx = MYSQLConnection(configs['sql'])
+SQL_cnx = MYSQLConnection(sql_config)
 sql_tables = {
     'musickey': {'schema':MusicKeySchema(),'obj':MusicKeyDB()},
     'genre' : {'schema':GenreSchema(),'obj':GenreDB()},
