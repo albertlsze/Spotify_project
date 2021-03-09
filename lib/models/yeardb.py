@@ -5,6 +5,9 @@ from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
 
 class YearDB(DeclarativeBase):
+    '''
+        Create Year table structure using SQLalchemy
+    '''
     __tablename__ = 'yeardb'
     release_year = Column(Integer, primary_key=True, autoincrement=False)
     acousticness_mean = Column(Float)
@@ -23,9 +26,18 @@ class YearDB(DeclarativeBase):
     musickey = relationship("MusicKeyDB")
 
     def __init__(self):
+        '''
+            Initialize with table name
+        '''
         self.name = 'yeardb'
 
     def load_csv(self, filename):
+        '''
+            load any preexisting csv data file and preprocess the data, by changing column names
+
+        :param filename: file path of csv data
+        :return: None
+        '''
         self.data = pd.read_csv(filename)
 
         col_name = []

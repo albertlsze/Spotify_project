@@ -6,6 +6,9 @@ import pandas as pd
 from pprint import pprint
 
 class SongDB(DeclarativeBase):
+    '''
+        Create Song table structure using SQLalchemy
+    '''
     __tablename__ = 'songdb'
     song_id = Column(String(100), primary_key=True)
     song_name = Column(String(1000))
@@ -32,9 +35,18 @@ class SongDB(DeclarativeBase):
     musickey = relationship("MusicKeyDB")
 
     def __init__(self):
+        '''
+            Initialize with table name
+        '''
         self.name = 'songdb'
 
     def load_csv(self,filename):
+        '''
+            load any preexisting csv data file and preprocess the data, by changing column names
+
+        :param filename: file path of csv data
+        :return: None
+        '''
         self.data = pd.read_csv(filename)
         self.data = self.data.drop(columns=['artists'])
         self.data = self.data[self.data['id'].notnull()]

@@ -4,4 +4,7 @@ from sqlalchemy.ext.declarative.api import DeclarativeMeta
 
 Base = declarative_base()
 class DeclarativeBase(Base):
+    '''
+        Create Declarative base for SQL connection
+    '''
     __abstract__ = True

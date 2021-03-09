@@ -6,7 +6,7 @@ import pandas as pd
 
 class ArtistDB(DeclarativeBase):
     '''
-
+        Create Artist table structure using SQLalchemy
     '''
     __tablename__ = 'artistdb'
     artists_id = Column(String(100), primary_key=True)
@@ -31,9 +31,18 @@ class ArtistDB(DeclarativeBase):
     musickey = relationship("MusicKeyDB")
 
     def __init__(self):
+        '''
+            Initialize with table name
+        '''
         self.name = 'artistdb'
 
     def load_csv(self, filename):
+        '''
+            load any preexisting csv data file and preprocess the data, by changing column names
+
+        :param filename: file path of csv data
+        :return: None
+        '''
         self.data = pd.read_csv(filename)
         self.data = self.data[self.data['artists_id'].notnull()]
         self.data = self.data.drop_duplicates(['artists_id'],keep='first')

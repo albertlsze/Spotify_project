@@ -5,6 +5,9 @@ from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
 
 class GenreDB(DeclarativeBase):
+    '''
+        Create Genre table structure using SQLalchemy
+    '''
     __tablename__ = 'genredb'
     genres = Column(String(100), primary_key=True)
     acousticness_mean = Column(Float)
@@ -23,9 +26,18 @@ class GenreDB(DeclarativeBase):
     musickey = relationship("MusicKeyDB")
 
     def __init__(self):
+        '''
+            Initialize with table name
+        '''
         self.name = 'genredb'
 
     def load_csv(self, filename):
+        '''
+            load any preexisting csv data file and preprocess the data, by changing column names
+
+        :param filename: file path of csv data
+        :return: None
+        '''
         self.data = pd.read_csv(filename)
 
         col_name = []
