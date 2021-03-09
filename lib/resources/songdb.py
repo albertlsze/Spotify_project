@@ -5,7 +5,7 @@ from marshmallow import fields
 from sqlalchemy import or_
 from sqlalchemy.orm.exc import NoResultFound
 
-from .. import SQL_cnx, SONG_SCHEMA, MANY_SONG_SCHEMA,
+from .. import SQL_cnx, SONG_SCHEMA, MANY_SONG_SCHEMA
 from ..models.songdb import SongDB
 
 class AllSongItems(MethodView):
