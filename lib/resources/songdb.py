@@ -4,14 +4,15 @@ from flask.views import MethodView
 from marshmallow import fields
 from sqlalchemy import or_
 from sqlalchemy.orm.exc import NoResultFound
+from pprint import pprint
 
-from .. import SQL_cnx, SONG_SCHEMA, MANY_SONG_SCHEMA
-from ..models.songdb import SongDB
+from lib import SQL_cnx, SONG_SCHEMA, MANY_SONG_SCHEMA
+from lib.models.songdb import SongDB
 
 class AllSongItems(MethodView):
     '''Class for REST methods to interact with multiple OSRS Item in DB'''
 
-    def get(self, **_):
+    def get(self, order_by = SongDB.song_name, **_):
         '''Get all songs currently in the database.
 
         :param _: None
@@ -26,11 +27,16 @@ class AllSongItems(MethodView):
                     500:
                         description: unexpected exception occurred during request.
         '''
-        with SQL_cnx.session() as sess:
-            multi_songs = sess.query(SongDB.song_id,SongDB.song_name).all()
+        with SQL_cnx.session_scope() as sess:
+            multi_songs = sess.query(SongDB.song_id,SongDB.song_name,SongDB.artists_id,SongDB.release_date).order_by(order_by).all()
             dumped_item = MANY_SONG_SCHEMA.dump(multi_songs)
 
             if not dumped_item:
                 return abort(404)
 
-        return {'data': dumped_item}
+        return dumped_item
+
+
+if __name__ == '__main__':
+    all_songs = AllSongItems.as_view('multi_songs')
+    pprint(all_songs.get())

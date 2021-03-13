@@ -9,7 +9,7 @@ from bokeh.models.widgets import Tabs
 class bokeh_hist():
     def __init__(self,title):
         self.hists = []
-        output_file(f"{title}.html")
+        #output_file(f"{title}.html")
 
     def add_tabs(self,data:pd,features:list,show_plot=False)->None:
         '''
@@ -25,7 +25,8 @@ class bokeh_hist():
             panel = Panel(child=plot,title=column.capitalize())
             self.hists.append(panel)
         t= Tabs(tabs=self.hists)
-        show(t)
+        #show(t)
+        return t
 
     def hist_hover(self,data:pd, column:str, bins=30, show_plot=True):
         '''
@@ -66,7 +67,7 @@ class bokeh_hist():
             return plot
 
 if __name__ == "__main__":
-    song_data = 'C:\\Users\\alber\\Documents\\Github\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
+    song_data = 'D:\\Documents\\Github\\albertlsze\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
     song_data = pd.read_csv(song_data)
     column = ["acousticness","danceability","duration_ms","energy","instrumentalness","key","liveness","loudness","popularity","speechiness","tempo","valence"]
 
