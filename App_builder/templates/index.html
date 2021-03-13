@@ -54,101 +54,31 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="table-responsive table-hover table-sales">
-										<table class="table">
-											<tbody>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/id.png" alt="indonesia">
-														</div>
-													</td>-->
-													<td>Indonesia</td>
-													<td class="text-right">
-														2.320
-													</td>
-													<td class="text-right">
-														42.18%
-													</td>
-												</tr>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/us.png" alt="united states">
-														</div>
-													</td>-->
-													<td>USA</td>
-													<td class="text-right">
-														240
-													</td>
-													<td class="text-right">
-														4.36%
-													</td>
-												</tr>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/au.png" alt="australia">
-														</div>
-													</td>-->
-													<td>Australia</td>
-													<td class="text-right">
-														119
-													</td>
-													<td class="text-right">
-														2.16%
-													</td>
-												</tr>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/ru.png" alt="russia">
-														</div>
-													</td>-->
-													<td>Russia</td>
-													<td class="text-right">
-														1.081
-													</td>
-													<td class="text-right">
-														19.65%
-													</td>
-												</tr>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/cn.png" alt="china">
-														</div>
-													</td>-->
-													<td>China</td>
-													<td class="text-right">
-														1.100
-													</td>
-													<td class="text-right">
-														20%
-													</td>
-												</tr>
-												<tr>
-													<!--<td>
-														<div class="flag">
-															<img src="/static/assets/img/flags/br.png" alt="brazil">
-														</div>
-													</td>-->
-													<td>Brasil</td>
-													<td class="text-right">
-														640
-													</td>
-													<td class="text-right">
-														11.63%
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div id = "table-wrapper">
+											<div id = "table-scroll" style="min-height: 375px">
+												<table class="table">
+													<thead>
+														<tr>
+															<th><span class="text">Song Title</span></th>
+															<th><span class="text">Artists</span></th>
+															<th><span class="text">Release Date</span></th>
+														</tr>
+													</thead>
+													<tbody>
+													{% for titles in song_titles %}
+														<tr>
+															<td>{{ titles.song_name }}</td>
+															<td class="text">{{ titles.artists_id }}</td>
+															<td class="text-right">{{ titles.release_date }}</td>
+														</tr>
+													{% endfor %}
+													</tbody>
+												</table>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-6">
-									<!--<div class="mapcontainer">
-										<div id="map-example" class="vmap"></div>
-									</div>-->
-								</div>
+
 							</div>
 						</div>
 					</div>
@@ -180,22 +110,36 @@
 							<div class="chart-container" style="min-height: 375px">
 								<canvas id="statisticsChart"></canvas>
 							</div>
-							<div id="myChartLegend"></div>
+							<!--<div class="chart-container" style="min-height: 375px">
+								<canvas id="statisticsChart"></canvas>
+							</div>
+							<div id="myChartLegend"></div>-->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="container">
+			<div class="row mt-5">
+				<div class="col-6">
+					<p>latin phrase</p>
+				</div>
+				<div class="col-6">
+					{{ div_song_feature_chart | safe }}
+				</div>
+			</div>
 
+		</div>
+	</div>
+	{{ script_song_feature_chart | safe }}
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="/static/assets/js/setting-demo.js"></script>
-	<script src="/static/assets/js/demo.js"></script>
+	<!--<script src="/static/assets/js/setting-demo.js"></script>
+	<script src="/static/assets/js/demo.js"></script>-->
 
 	<script>
 
