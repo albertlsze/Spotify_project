@@ -34,7 +34,7 @@ def index():
 
 def song_feature_chart():
     # Bokeh graph
-    song_data = 'D:\\Documents\\Github\\albertlsze\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
+    song_data = 'C:\\Users\\alber\\Documents\\Github\\Spotify_project\\scripts\\Prepopulated_data\\song_data.csv'
     song_data = pd.read_csv(song_data)
     column = ["acousticness", "danceability", "duration_ms", "energy", "instrumentalness", "key", "liveness",
               "loudness", "popularity", "speechiness", "tempo", "valence"]
