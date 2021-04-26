@@ -1,16 +1,22 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from typing import NoReturn
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
+from pprint import pprint
 
 class ArtistDB(DeclarativeBase):
     '''
         Create Artist table structure using SQLalchemy
     '''
     __tablename__ = 'artistdb'
+    __table_args__ = (
+        Index('artists_id_idx','artists_id'),
+    )
+
     artists_id = Column(String(100), primary_key=True)
-    artists = Column(String(1000))
+    artists = Column(String(1000), primary_key=True)
     artist_popularity = Column(Integer)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
@@ -30,13 +36,7 @@ class ArtistDB(DeclarativeBase):
     followers = Column(Integer, default=0)
     musickey = relationship("MusicKeyDB")
 
-    def __init__(self):
-        '''
-            Initialize with table name
-        '''
-        self.name = 'artistdb'
-
-    def load_csv(self, filename):
+    def load_csv(self, filename:str)->NoReturn:
         '''
             load any preexisting csv data file and preprocess the data, by changing column names
 
@@ -61,4 +61,6 @@ class ArtistDB(DeclarativeBase):
             else:
                 col_name.append(i + '_mean')
         self.data.columns = col_name
-        self.data.set_index('artists_id', inplace=True)
+        #self.data.set_index('artists_id', inplace=True)
+        self.data = self.data.where(pd.notnull(self.data), None)
+        self.data = self.data.to_dict(orient='records')

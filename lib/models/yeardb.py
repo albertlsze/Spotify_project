@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, Float, ForeignKey
+from sqlalchemy import Column, Integer, Float, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
@@ -9,6 +9,10 @@ class YearDB(DeclarativeBase):
         Create Year table structure using SQLalchemy
     '''
     __tablename__ = 'yeardb'
+    __table_args__ = (
+        Index('year_idx', 'release_year'),
+    )
+
     release_year = Column(Integer, primary_key=True, autoincrement=False)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
@@ -24,12 +28,6 @@ class YearDB(DeclarativeBase):
     music_key_mode = Column(Integer, ForeignKey('musickeydb.music_key'))
     major_minor_mode = Column(Integer)
     musickey = relationship("MusicKeyDB")
-
-    def __init__(self):
-        '''
-            Initialize with table name
-        '''
-        self.name = 'yeardb'
 
     def load_csv(self, filename):
         '''
@@ -51,4 +49,6 @@ class YearDB(DeclarativeBase):
             else:
                 col_name.append(i + '_mean')
         self.data.columns = col_name
-        self.data.set_index('release_year', inplace=True)
+        #self.data.set_index('release_year', inplace=True)
+        self.data = self.data.where(pd.notnull(self.data), None)
+        self.data = self.data.to_dict(orient='records')

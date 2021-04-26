@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData
+from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey, MetaData, Index
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
@@ -9,6 +9,10 @@ class GenreDB(DeclarativeBase):
         Create Genre table structure using SQLalchemy
     '''
     __tablename__ = 'genredb'
+    __table_args__ = (
+        Index('genres_idx', 'genres'),
+    )
+
     genres = Column(String(100), primary_key=True)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
@@ -24,12 +28,6 @@ class GenreDB(DeclarativeBase):
     music_key_mode = Column(Integer, ForeignKey('musickeydb.music_key'))
     major_minor_mode = Column(Integer)
     musickey = relationship("MusicKeyDB")
-
-    def __init__(self):
-        '''
-            Initialize with table name
-        '''
-        self.name = 'genredb'
 
     def load_csv(self, filename):
         '''
@@ -51,4 +49,5 @@ class GenreDB(DeclarativeBase):
             else:
                 col_name.append(i + '_mean')
         self.data.columns = col_name
-        self.data.set_index('genres', inplace=True)
+        self.data = self.data.where(pd.notnull(self.data), None)
+        self.data = self.data.to_dict(orient='records')

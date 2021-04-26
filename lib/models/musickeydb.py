@@ -11,12 +11,6 @@ class MusicKeyDB(DeclarativeBase):
     music_key = Column(Integer, primary_key=True, autoincrement=False)
     music_note = Column(String(5))
 
-    def __init__(self):
-        '''
-            Initialize with table name
-        '''
-        self.name = 'musickeydb'
-
     def load_csv(self,filename):
         '''
             load any preexisting csv data file
@@ -25,4 +19,6 @@ class MusicKeyDB(DeclarativeBase):
         :return: None
         '''
         self.data = pd.read_csv(filename)
-        self.data.set_index('music_key', inplace=True)
+        #self.data.set_index('music_key', inplace=True)
+        self.data = self.data.where(pd.notnull(self.data), None)
+        self.data = self.data.to_dict(orient='records')

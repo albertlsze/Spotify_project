@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, Float, String, Boolean, Date, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, Boolean, Date, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
@@ -10,6 +10,11 @@ class SongDB(DeclarativeBase):
         Create Song table structure using SQLalchemy
     '''
     __tablename__ = 'songdb'
+    __table_args__ = (
+        Index('song_id_idx', 'song_id'),
+        Index('song_name_idx', 'song_name'),
+    )
+
     song_id = Column(String(100), primary_key=True)
     song_name = Column(String(1000))
     artists_id = Column(String(1000))
@@ -33,12 +38,6 @@ class SongDB(DeclarativeBase):
 
 
     musickey = relationship("MusicKeyDB")
-
-    def __init__(self):
-        '''
-            Initialize with table name
-        '''
-        self.name = 'songdb'
 
     def load_csv(self,filename):
         '''
@@ -65,4 +64,6 @@ class SongDB(DeclarativeBase):
             else:
                 col_name.append(i)
         self.data.columns = col_name
-        self.data.set_index('song_id', inplace=True)
+        #self.data.set_index('song_id', inplace=True)
+        self.data = self.data.where(pd.notnull(self.data), None)
+        self.data = self.data.to_dict(orient='records')
