@@ -2,6 +2,10 @@ import pandas as pd
 from lib.connection.mysqlcnx import MYSQLConnection
 from lib.models.yeardb import YearDB
 from lib.models.musickeydb import MusicKeyDB
+from lib.utils.Data_pipeline.insert_into_databases import (insert_data_into_database,
+                                                           insert_artists, insert_genres, insert_musickeys,
+                                                           insert_song_times, insert_songs, insert_years
+                                                           )
 
 def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
     ''' adds data from a panda dataframe into sql database
@@ -33,6 +37,10 @@ def  prepopulate_db(cnx:MYSQLConnection, table:dict) -> None:
     table['artist']['obj'].load_csv("./Prepopulated_data/data_by_artist_preprocessed.csv")
     table['song']['obj'].load_csv("./Prepopulated_data/song_data.csv")
 
+
+
     for key in table:
-        print('\n',key)
-        add_pd_to_sql(table[key]['obj'].data,cnx,table[key]['obj'])
+        if hasattr(table[key]['obj'], 'data'):
+            print(key)
+            #add_pd_to_sql(table[key]['obj'].data,cnx,table[key]['obj'])
+            insert_data_into_database(table[key]['obj'].data,eval(f"insert_{key}s"))
