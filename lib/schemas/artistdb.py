@@ -8,3 +8,4 @@ class ArtistSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = ArtistDB
         load_instance = True
+        include_fk = True

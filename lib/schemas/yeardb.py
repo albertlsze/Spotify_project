@@ -8,3 +8,4 @@ class YearSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = YearDB
         load_instance = True
+        include_fk = True

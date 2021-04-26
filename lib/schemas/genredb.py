@@ -8,3 +8,4 @@ class GenreSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = GenreDB
         load_instance = True
+        include_fk = True

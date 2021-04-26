@@ -1,11 +1,11 @@
 '''Marshmallow schema definition OSRS items sqlalchemy model'''
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
-from ..models.songdb import SongDB
+from ..models.song_timescale_db import SongTimeDB
 
-class SongSchema(SQLAlchemyAutoSchema):
+class SongTimeSchema(SQLAlchemyAutoSchema):
     '''Song Marshmallow schema class'''
     class Meta:
-        model = SongDB
+        model = SongTimeDB
         load_instance = True
         include_fk = True
