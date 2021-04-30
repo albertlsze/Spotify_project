@@ -19,7 +19,7 @@ class PostgresConnection:
         self.engine = create_engine(f"postgresql+psycopg2{self.name}", pool_pre_ping=True)
         self.create_database()
         self.session_factory = sessionmaker(bind=self.engine)
-        self.session_registry = scoped_session(self.session_factory)
+        self.session = scoped_session(self.session_factory)
 
     def create_database(self)->None:
         '''Checks if database exists and creates database
@@ -30,12 +30,12 @@ class PostgresConnection:
             create_database(self.engine.url)
 
     @contextmanager
-    def session(self) -> scoped_session:
+    def session_scope(self) -> scoped_session:
         '''Provide a scoped session to perform operations on sqllite db
         
         :returns: scoped sqllite session
         '''
-        session = self.session_registry()
+        session = self.session()
         try:
             yield session
             session.commit()
