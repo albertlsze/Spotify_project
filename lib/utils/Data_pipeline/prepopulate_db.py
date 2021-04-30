@@ -1,5 +1,6 @@
 import pandas as pd
-from lib.connection.mysqlcnx import MYSQLConnection
+#from lib.connection.mysqlcnx import MYSQLConnection
+from lib.connection.postgres import PostgresConnection
 from lib.models.yeardb import YearDB
 from lib.models.musickeydb import MusicKeyDB
 from lib.utils.Data_pipeline.insert_into_databases import (insert_data_into_database,
@@ -7,7 +8,7 @@ from lib.utils.Data_pipeline.insert_into_databases import (insert_data_into_data
                                                            insert_song_times, insert_songs, insert_years
                                                            )
 
-def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
+def add_pd_to_sql(pd_df:pd,cnx:PostgresConnection, db_obj) -> None:
     ''' adds data from a panda dataframe into sql database
 
     :param pd_df: data in a pandas data frame
@@ -24,7 +25,7 @@ def add_pd_to_sql(pd_df:pd,cnx:MYSQLConnection, db_obj) -> None:
     else:
         print("Table %s created successfully." % db_obj.name);
 
-def  prepopulate_db(cnx:MYSQLConnection, table:dict) -> None:
+def  prepopulate_db(cnx:PostgresConnection, table:dict) -> None:
     '''Prepopulates sql databases with preexisting data
 
     :param cnx: SQL connection

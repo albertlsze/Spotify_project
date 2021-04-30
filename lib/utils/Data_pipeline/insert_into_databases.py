@@ -14,7 +14,7 @@ import datetime
 from pprint import pprint
 
 def insert_data_into_database(item_list: List[Dict],*args) -> NoReturn:
-    with SQL_cnx.session() as sess:
+    with SQL_cnx.session_scope() as sess:
         for arg in args:
             item_objs = arg(item_list,sess)
             sess.bulk_save_objects(item_objs, update_changed_only=False)
