@@ -14,7 +14,7 @@ class SongTimeDB(DeclarativeBase):
         Index('date_idx', 'date'),
     )
 
-    date = Column(DateTime, primary_key=True)
+    date = Column(Date, primary_key=True)
     song_id = Column(String(100), ForeignKey('songdb.song_id') , primary_key=True)
     song_name = Column(String(1000), primary_key=True)
     artists_id = Column(String(1000), primary_key=True)

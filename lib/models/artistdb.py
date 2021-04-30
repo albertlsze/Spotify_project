@@ -1,6 +1,6 @@
 import sqlalchemy
 from typing import NoReturn
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, Index
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, Index, Date
 from sqlalchemy.orm import relationship
 from lib.models.declarative_base import DeclarativeBase
 import pandas as pd
@@ -17,6 +17,7 @@ class ArtistDB(DeclarativeBase):
 
     artists_id = Column(String(100), primary_key=True)
     artists = Column(String(1000), primary_key=True)
+    last_updated = Column(Date, primary_key=True)
     artist_popularity = Column(Integer)
     acousticness_mean = Column(Float)
     danceability_mean = Column(Float)
