@@ -37,6 +37,25 @@ class AllSongItems(MethodView):
         return dumped_item
 
 
+    def get_distinct_item_ids(self, **_):
+        with SQL_cnx.session_scope() as sess:
+            item_ids = sess.query(SongDB.song_id).distinct()
+            dumped_item = MANY_SONG_SCHEMA.dump(item_ids)
+
+            if not dumped_item:
+                return abort(404)
+
+            distinct_ids = []
+            for i in dumped_item:
+                distinct_ids.append(i['song_id'])
+        return distinct_ids
+
+
 if __name__ == '__main__':
-    all_songs = AllSongItems.as_view('multi_songs')
-    pprint(all_songs.get())
+    all_songs = AllSongItems()
+    distinct_ids = all_songs.get_distinct_item_ids()
+    pprint(type(distinct_ids))
+    pprint(len(distinct_ids))
+    pprint(len(set(distinct_ids)))
+
+    #pprint(all_songs.get())
